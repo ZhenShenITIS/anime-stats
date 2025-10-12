@@ -1,0 +1,30 @@
+package server.entities;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+
+@Builder
+@AllArgsConstructor
+@Getter
+public class User {
+
+    private Long id;
+
+    private String name;
+
+    private String email;
+
+    private String login;
+
+    private String password;
+
+    public User(String name, String email, String login, String password) {
+        this.name = name;
+        this.email = email;
+        this.login = login;
+        this.password = password;
+    }
+
+
+}
