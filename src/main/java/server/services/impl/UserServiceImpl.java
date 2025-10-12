@@ -22,18 +22,16 @@ public class UserServiceImpl implements UserService {
                 .builder()
                         .email(u.getEmail())
                         .name(u.getName())
-                        .login(u.getLogin())
                 .build())
                 .toList();
     }
 
     @Override
-    public UserDto getByLogin(String login) {
-        User user = userDao.getByLogin(login);
+    public UserDto getByEmail(String email) {
+        User user = userDao.getByEmail(email);
         if (user != null) {
             return UserDto
                     .builder()
-                    .login(user.getLogin())
                     .email(user.getEmail())
                     .name(user.getName())
                     .build();

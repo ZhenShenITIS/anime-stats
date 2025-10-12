@@ -20,9 +20,9 @@ public class LoginServlet  extends HttpServlet {
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String login = req.getParameter("login");
+        String email = req.getParameter("email");
         String password = req.getParameter("password");
-        UserDto user = loginService.login(new UserLoginDto(login, password));
+        UserDto user = loginService.login(new UserLoginDto(email, password));
         if (user != null) {
             req.setAttribute("user", user);
             req.getRequestDispatcher("index").forward(req, resp);

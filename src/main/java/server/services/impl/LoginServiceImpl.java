@@ -13,14 +13,13 @@ public class LoginServiceImpl implements LoginService {
     private UserDao userDao;
     @Override
     public UserDto login(UserLoginDto userLoginDto) {
-        String login = userLoginDto.getLogin();
+        String email = userLoginDto.getEmail();
         String passwordHash = PasswordUtil.encrypt(userLoginDto.getPassword());
-        User user = userDao.getByLogin(login);
+        User user = userDao.getByEmail(email);
         if (user != null && user.getPassword().equals(passwordHash)) {
             return UserDto
                     .builder()
                     .name(user.getName())
-                    .login(user.getLogin())
                     .email(user.getEmail())
                     .build();
 

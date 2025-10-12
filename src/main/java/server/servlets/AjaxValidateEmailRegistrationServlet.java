@@ -10,15 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/ajax/validate/login/registration")
-public class AjaxValidateLoginRegistrationServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/ajax/validate/email/registration")
+public class AjaxValidateEmailRegistrationServlet extends HttpServlet {
     private UserService userService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String login = req.getParameter("login");
-        System.out.println(login);
-        UserDto userDto = userService.getByLogin(login);
+        String email = req.getParameter("email");
+        System.out.println(email);
+        UserDto userDto = userService.getByEmail(email);
         resp.setContentType("plain/text");
         if (userDto == null) {
             resp.getWriter().write("true");

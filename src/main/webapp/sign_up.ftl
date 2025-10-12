@@ -92,8 +92,8 @@
                 <input type="text" name="name" class="form-control" id="signup-name" placeholder="name" required>
             </div>
             <div class="mb-3">
-                <label for="signup-lastName" class="form-label">Last Name</label>
-                <input type="text" name="lastName" class="form-control" id="signup-lastName" placeholder="last name" required>
+                <label for="signup-email" class="form-label">E-mail</label>
+                <input type="email" name="email" class="form-control" id="signup-email" placeholder="email" required>
             </div>
             <div class="mb-3">
                 <label for="ajax-login" class="form-label">Login</label>

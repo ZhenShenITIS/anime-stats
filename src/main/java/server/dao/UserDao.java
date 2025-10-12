@@ -13,6 +13,6 @@ public interface UserDao {
 
     User getById(Integer id);
 
-    User getByLogin(String login);
+    User getByEmail(String email);
 
 }

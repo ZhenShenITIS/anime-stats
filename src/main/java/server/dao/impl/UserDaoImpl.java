@@ -29,7 +29,6 @@ public class UserDaoImpl implements UserDao {
                             .builder()
                                     .name(resultSet.getString("name"))
                                     .id(resultSet.getLong("id"))
-                                    .login(resultSet.getString("login"))
                                     .email(resultSet.getString("email"))
                                     .password(resultSet.getString("password"))
                             .build());
@@ -43,14 +42,13 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void save(User user) {
-        String sql = "insert into users (name, email, login, password) values (?, ?, ?, ?)";
+        String sql = "insert into users (name, email, password) values (?, ?, ?, ?)";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getEmail());
-            preparedStatement.setString(3, user.getLogin());
-            preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setString(3, user.getPassword());
             preparedStatement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -65,19 +63,18 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getByLogin(String login) {
-        String sql = "SELECT * FROM users where login = ?";
+    public User getByEmail(String email) {
+        String sql = "SELECT * FROM users where email = ?";
         User user;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, login);
+            preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 user = User
                         .builder()
                         .name(resultSet.getString("name"))
                         .id(resultSet.getLong("id"))
-                        .login(resultSet.getString("login"))
                         .email(resultSet.getString("email"))
                         .password(resultSet.getString("password"))
                         .build();

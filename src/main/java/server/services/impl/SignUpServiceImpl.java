@@ -14,18 +14,16 @@ public class SignUpServiceImpl implements SignUpService {
 
     @Override
     public boolean signUp(UserRegistrationDto userRegistrationDto) {
-        if (userDao.getByLogin(userRegistrationDto.getLogin()) != null){
+        if (userDao.getByEmail(userRegistrationDto.getEmail()) != null){
             return false;
         }
         String name = userRegistrationDto.getName();
         String email = userRegistrationDto.getEmail();
-        String login = userRegistrationDto.getLogin();
         String password = PasswordUtil.encrypt(userRegistrationDto.getPassword());
         User user = User
                 .builder()
                 .name(name)
                 .email(email)
-                .login(login)
                 .password(password)
                 .build();
         userDao.save(user);
