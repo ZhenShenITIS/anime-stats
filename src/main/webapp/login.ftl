@@ -7,7 +7,7 @@
 <#macro content>
         <h1>Login</h1>
         <form method="post" action="login">
-                Login: <input type="text" name="login"  placeholder="login"/>
+                Login: <input type="email" name="email"  placeholder="email"/>
                 <br>
 
                 Password: <input type="password" name="password" placeholder="password"/>

@@ -42,7 +42,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void save(User user) {
-        String sql = "insert into users (name, email, password) values (?, ?, ?, ?)";
+        String sql = "insert into users (name, email, password) values (?, ?, ?)";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);

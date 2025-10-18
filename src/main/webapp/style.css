@@ -1,4 +1,4 @@
-/* Общие стили для body */
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f2f5;
@@ -7,7 +7,7 @@ body {
     color: #333;
 }
 
-/* Стили для хедера */
+
 #header {
     background-color: #3a86ff;
     color: white;
@@ -33,7 +33,6 @@ body {
     text-decoration: underline;
 }
 
-/* Контент */
 #content {
     padding: 30px;
 }
@@ -45,4 +44,73 @@ body {
     padding: 20px;
     max-width: 900px;
     margin: 0 auto;
+}
+
+
+.sign-up-form-container {
+    max-width: 430px;
+    margin: 56px auto;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(44,62,80,0.17);
+    padding: 36px 28px;
+}
+
+.sign-up-form-container h1 {
+    text-align: center;
+    margin-bottom: 24px;
+    color: #1a2235;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #355c7d;
+}
+
+#ajax-email-response {
+    font-size: 0.95em;
+    font-weight: 600;
+    margin-top: 5px;
+    min-height: 22px;
+    color: #16a34a;
+}
+
+input#ajax-email:invalid,
+input:focus:invalid {
+    border-color: #e11d48;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    border-radius: 7px;
+    font-size: 1.05em;
+}
+
+.ui-button,
+input[type="submit"] {
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px 0;
+    border-radius: 7px;
+    font-weight: bold;
+    font-size: 1.1em;
+    background: linear-gradient(90deg, #2772fa 30%, #68e0cf 100%);
+    color: #fff;
+    border: none;
+    transition: background 0.18s;
+}
+
+.ui-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: #d1d1d1;
+}
+
+.ui-button:hover:enabled,
+input[type="submit"]:hover:enabled {
+    background: linear-gradient(90deg, #176aa3 20%, #29e090 100%);
+    color: #fff;
 }
