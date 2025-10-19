@@ -23,26 +23,19 @@ public class MyAnimeListServiceImpl implements MyAnimeListService {
     public Anime getAnimeById(Long animeId) {
         String url = StringConstants.MAL_ANIME_NECESSARY_INFO.getValue().formatted(animeId);
         JSONObject response = new JSONObject(getResponse(url));
-        JSONObject mainPicture = response.getJSONObject("main_picture");
-        JSONArray genres = response.getJSONArray("genres");
-        List<Genre> genreList = new ArrayList<>();
-        for (int i =0; i < genres.length(); i++){
-            JSONObject JSONGenre = genres.getJSONObject(i);
-            genreList.add(Genre
-                    .builder()
-                            .id(JSONGenre.getInt("id"))
-                            .name(JSONGenre.getString("name"))
-                    .build());
-        }
+        String pictureUrl = parsePicture(response);
+        List<Genre> genreList = parseGenres(response);
+        List<Anime> relatedAnimeList = parseRelatedAnime(response);
         Anime anime = Anime
                 .builder()
                 .id(response.getLong("id"))
                 .title(response.getString("title"))
-                .picturePath("not saved in DB yet")
+                .picturePath(pictureUrl)
                 .synopsis(response.getString("synopsis"))
                 .score(response.getDouble("mean"))
                 .rank(response.getInt("rank"))
                 .genres(genreList)
+                .relatedAnime(relatedAnimeList)
                 .build();
 
         return anime;
@@ -99,5 +92,41 @@ public class MyAnimeListServiceImpl implements MyAnimeListService {
         }
         return response.body();
 
+    }
+
+    private List<Genre> parseGenres (JSONObject response) {
+        JSONArray genres = response.getJSONArray("genres");
+        List<Genre> genreList = new ArrayList<>();
+        for (int i =0; i < genres.length(); i++){
+            JSONObject JSONGenre = genres.getJSONObject(i);
+            genreList.add(Genre
+                    .builder()
+                    .id(JSONGenre.getInt("id"))
+                    .name(JSONGenre.getString("name"))
+                    .build());
+        }
+        return genreList;
+    }
+
+    private List<Anime> parseRelatedAnime (JSONObject response) {
+        JSONArray relatedAnime = response.getJSONArray("related_anime");
+        List<Anime> relatedAnimeList = new ArrayList<>();
+        if (!relatedAnime.isEmpty()) {
+            for (int i = 0; i < relatedAnime.length(); i++) {
+                JSONObject JSONRelatedAnime = relatedAnime.getJSONObject(i);
+                JSONObject node = JSONRelatedAnime.getJSONObject("node");
+                relatedAnimeList.add(Anime
+                        .builder()
+                        .id(node.getLong("id"))
+                        .title(node.getString("title"))
+                        .build());
+            }
+        }
+        return relatedAnimeList;
+    }
+
+    private String parsePicture (JSONObject response) {
+        JSONObject mainPicture = response.getJSONObject("main_picture");
+        return mainPicture.getString("medium");
     }
 }

@@ -47,9 +47,6 @@ public class ShikimoriServiceImpl implements ShikimoriService {
                 continue;
             }
             Integer score = jsonObject.getInt("score");
-            if (score.equals(0)) {
-                continue;
-            }
             Long animeId = jsonObject.getLong("target_id");
 
             ratesMap.put(animeId, score);

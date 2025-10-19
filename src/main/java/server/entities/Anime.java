@@ -18,5 +18,6 @@ public class Anime {
     private Double score;
     private Integer rank;
     private List<Genre> genres;
+    private List<Anime> relatedAnime;
 
 }
