@@ -3,11 +3,13 @@ package server.entities;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
 @ToString
 @Getter
+@Setter
 @AllArgsConstructor
 @Builder
 public class Anime {
