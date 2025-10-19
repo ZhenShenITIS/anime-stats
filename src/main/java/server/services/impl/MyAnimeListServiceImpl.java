@@ -26,13 +26,17 @@ public class MyAnimeListServiceImpl implements MyAnimeListService {
         String pictureUrl = parsePicture(response);
         List<Genre> genreList = parseGenres(response);
         List<Anime> relatedAnimeList = parseRelatedAnime(response);
+        Double score = 0d;
+        if (response.has("mean")) {
+            score = response.getDouble("mean");
+        }
         Anime anime = Anime
                 .builder()
                 .id(response.getLong("id"))
                 .title(response.getString("title"))
                 .picturePath(pictureUrl)
                 .synopsis(response.getString("synopsis"))
-                .score(response.getDouble("mean"))
+                .score(score)
                 .rank(response.getInt("rank"))
                 .genres(genreList)
                 .relatedAnime(relatedAnimeList)

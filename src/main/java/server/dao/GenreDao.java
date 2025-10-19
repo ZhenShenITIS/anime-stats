@@ -13,4 +13,6 @@ public interface GenreDao {
 
     List<Genre> getByAnimeId (Long id);
 
+    void saveAnimeGenre (Long animeId, Integer genreId);
+
 }

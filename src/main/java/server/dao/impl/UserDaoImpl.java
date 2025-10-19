@@ -1,5 +1,6 @@
 package server.dao.impl;
 
+import lombok.AllArgsConstructor;
 import server.dao.UserDao;
 import server.entities.User;
 import server.util.DatabaseConnectionUtil;
@@ -12,9 +13,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
 public class UserDaoImpl implements UserDao {
 
-    private final Connection connection = DatabaseConnectionUtil.getConnection();
+    private final Connection connection;
 
     @Override
     public List<User> getAll() {
