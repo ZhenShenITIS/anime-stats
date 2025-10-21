@@ -21,6 +21,17 @@
 
 
     </servlet>
+    <listener>
+        <listener-class>server.listeners.DataSourceListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>server.listeners.AppContextListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>server.listeners.DBInitializerListener</listener-class>
+    </listener>
 
     <servlet-mapping>
         <servlet-name>freemarker</servlet-name>

@@ -1,5 +1,6 @@
 package server.services.impl;
 
+import lombok.AllArgsConstructor;
 import server.dao.AnimeDao;
 import server.dao.GenreDao;
 import server.entities.Anime;
@@ -7,6 +8,7 @@ import server.entities.Genre;
 import server.services.AnimeSaverService;
 import server.util.ImageSaverUtil;
 
+@AllArgsConstructor
 public class AnimeSaverServiceImpl implements AnimeSaverService {
     AnimeDao animeDao;
 
