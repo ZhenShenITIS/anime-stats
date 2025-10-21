@@ -8,6 +8,8 @@ import server.entities.Genre;
 import server.services.AnimeSaverService;
 import server.util.ImageSaverUtil;
 
+import java.util.List;
+
 @AllArgsConstructor
 public class AnimeSaverServiceImpl implements AnimeSaverService {
     AnimeDao animeDao;
@@ -23,5 +25,14 @@ public class AnimeSaverServiceImpl implements AnimeSaverService {
             genreDao.saveOrUpdate(genre);
             genreDao.saveAnimeGenre(animeId, genre.getId());
         }
+    }
+
+    @Override
+    public Anime getWithGenresByID(Long animeId) {
+        Anime anime = animeDao.getById(animeId);
+        if (anime == null) return null;
+        List<Genre> genres = genreDao.getByAnimeId(animeId);
+        anime.setGenres(genres);
+        return anime;
     }
 }
