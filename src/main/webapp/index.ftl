@@ -1,20 +1,21 @@
 <html lang="en">
 <#include "base.ftl">
 
-<#macro title>Index Page</#macro>
+<#macro title>Main Page</#macro>
 
 <#macro content>
     <p>
-        Hello! It's a simple app!
+        Привет! С помощью данного сервиса ты можешь найти, что посмотреть!
     </p>
 
-    <form method="get" action="login">
-        <input type="submit" value="Login"/>
+    <form method="post" action="recommendations">
+        Никнейм на Shikimori: <input type="text"
+                                            name="shikiUsername"
+                                            placeholder="Example123"/>
+        <br>
+        <input type="submit" value="Найти" />
     </form>
-    <br>
-    <form method="get" action="signup">
-        <input type="submit" value="SignUp"/>
-    </form>
+
 
 
 </#macro>

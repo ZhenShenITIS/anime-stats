@@ -35,4 +35,9 @@ public class AnimeSaverServiceImpl implements AnimeSaverService {
         anime.setGenres(genres);
         return anime;
     }
+
+    @Override
+    public List<Anime> getWithGenresByGenreId(Integer id, int limit) {
+        return animeDao.getByGenreId(id, limit).stream().map(a -> getWithGenresByID(a.getId())).toList();
+    }
 }

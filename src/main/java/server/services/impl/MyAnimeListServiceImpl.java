@@ -1,6 +1,7 @@
 package server.services.impl;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import server.constants.StringConstants;
 import server.entities.Anime;
@@ -22,7 +23,13 @@ public class MyAnimeListServiceImpl implements MyAnimeListService {
     @Override
     public Anime getAnimeById(Long animeId) {
         String url = StringConstants.MAL_ANIME_NECESSARY_INFO.getValue().formatted(animeId);
-        JSONObject response = new JSONObject(getResponse(url));
+        JSONObject response = null;
+        try {
+            response = new JSONObject(getResponse(url));
+        } catch (JSONException e) {
+            return null;
+        }
+
         String pictureUrl = parsePicture(response);
         List<Genre> genreList = parseGenres(response);
         List<Anime> relatedAnimeList = parseRelatedAnime(response);
@@ -30,7 +37,8 @@ public class MyAnimeListServiceImpl implements MyAnimeListService {
         if (response.has("mean")) {
             score = response.getDouble("mean");
         }
-        Anime anime = Anime
+
+        return Anime
                 .builder()
                 .id(response.getLong("id"))
                 .title(response.getString("title"))
@@ -41,12 +49,11 @@ public class MyAnimeListServiceImpl implements MyAnimeListService {
                 .genres(genreList)
                 .relatedAnime(relatedAnimeList)
                 .build();
-
-        return anime;
     }
 
     @Override
     public Map<Long, Integer> getAnimeTop(int limit, int offset) {
+
         String url = StringConstants.MAL_RANKING_API.getValue() + "?ranking_type=all";
         if (limit > 0) {
             url = url + "&limit=" + limit;
@@ -73,6 +80,11 @@ public class MyAnimeListServiceImpl implements MyAnimeListService {
     }
 
     private String getResponse (String url) {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         HttpClient httpClient = HttpClient.newHttpClient();
         URI uri;
         try {
@@ -80,10 +92,11 @@ public class MyAnimeListServiceImpl implements MyAnimeListService {
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
-        String MALToken = System.getenv("MAL_TOKEN");
+        String MALToken = System.getenv("MAL_API_TOKEN");
         HttpRequest httpRequest = HttpRequest
                 .newBuilder()
                 .header("Authorization", "Bearer "+MALToken)
+                .header("User-Agent", "AnimeListStat (contact=ewgenii20066@gmail.com)")
                 .uri(uri)
                 .build();
         HttpResponse<String> response;

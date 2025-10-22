@@ -11,12 +11,14 @@ import server.services.AnimeSaverService;
 import server.services.LoginService;
 import server.services.MyAnimeListService;
 import server.services.RecommendationService;
+import server.services.ShikimoriService;
 import server.services.SignUpService;
 import server.services.UserService;
 import server.services.impl.AnimeSaverServiceImpl;
 import server.services.impl.LoginServiceImpl;
 import server.services.impl.MyAnimeListServiceImpl;
 import server.services.impl.RecommendationServiceImpl;
+import server.services.impl.ShikimoriServiceImpl;
 import server.services.impl.SignUpServiceImpl;
 import server.services.impl.UserServiceImpl;
 import server.util.DatabaseConnectionUtil;
@@ -41,7 +43,8 @@ public class AppContextListener implements ServletContextListener {
         LoginService loginService = new LoginServiceImpl(userDao);
         SignUpService signUpService = new SignUpServiceImpl(userDao);
         UserService userService = new UserServiceImpl(userDao);
-        RecommendationService recommendationService = new RecommendationServiceImpl(animeSaverService, animeDao);
+        RecommendationService recommendationService = new RecommendationServiceImpl(animeSaverService);
+        ShikimoriService shikimoriService = new ShikimoriServiceImpl();
 
         DatabaseInitializer databaseInitializer = new DatabaseInitializer(animeSaverService, myAnimeListService);
 
@@ -50,6 +53,7 @@ public class AppContextListener implements ServletContextListener {
         sce.getServletContext().setAttribute("userService", userService);
         sce.getServletContext().setAttribute("databaseInitializer", databaseInitializer);
         sce.getServletContext().setAttribute("recommendationService", recommendationService);
+        sce.getServletContext().setAttribute("shikimoriService", shikimoriService);
 
     }
 }

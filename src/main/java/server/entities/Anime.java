@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
+
 @ToString
 @Getter
 @Setter
@@ -24,8 +25,16 @@ public class Anime {
     private List<Anime> relatedAnime;
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj.getClass().equals(this.getClass())) return false;
-        return this.id.equals(((Anime) obj).getId());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof Anime)) return false;
+
+        return (getId() != null) && (getId().equals(((Anime) o).getId()));
+    }
+
+    @Override
+    public int hashCode() {
+        return getId() != null ? getId().hashCode() : 0;
     }
 }

@@ -11,6 +11,11 @@ public class DataSourceListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         HikariConfig hikariConfig = new HikariConfig();
         String url = System.getenv("DB_URL");
         String user = System.getenv("DB_USER");

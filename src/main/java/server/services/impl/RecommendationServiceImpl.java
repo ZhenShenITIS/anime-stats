@@ -19,7 +19,6 @@ import java.util.Set;
 @AllArgsConstructor
 public class RecommendationServiceImpl implements RecommendationService {
     private final AnimeSaverService animeSaverService;
-    private final AnimeDao animeDao;
 
     @Override
     public List<Anime> getRecommendations(Map<Long, Integer> rates) {
@@ -37,6 +36,7 @@ public class RecommendationServiceImpl implements RecommendationService {
             Integer rateOfAnime = rates.get(animeId);
             if (rateOfAnime.equals(0)) continue;
             Anime anime = animeSaverService.getWithGenresByID(animeId);
+            if (anime == null) continue;
             if (anime.getGenres() == null || anime.getGenres().isEmpty()) continue;
             for (Genre genre : anime.getGenres()) {
                 if (genresRates.containsKey(genre.getId())) {
@@ -63,7 +63,7 @@ public class RecommendationServiceImpl implements RecommendationService {
         Set<Anime> candidates = new LinkedHashSet<>();
         for (int i = 0; i < Math.min(sortedGenres.size(), 3); i++) {
             Integer genreId = sortedGenres.get(i);
-            List<Anime> topAnimeByGenre = animeDao.getByGenreId(genreId, 250);
+            List<Anime> topAnimeByGenre = animeSaverService.getWithGenresByGenreId(genreId, 250);
             candidates.addAll(topAnimeByGenre);
         }
         return new ArrayList<>(candidates);
@@ -74,7 +74,11 @@ public class RecommendationServiceImpl implements RecommendationService {
                 .stream()
                 .sorted(Comparator.comparing( a -> {
                     Anime anime = (Anime) a;
-                    int sum = anime.getGenres().stream().mapToInt(g -> genresRates.getOrDefault(g.getId(), 0)).sum();
+                    List<Genre> genres = anime.getGenres();
+                    if (genres == null) {
+                        return anime.getScore()*genreWeight;
+                    }
+                    int sum = genres.stream().mapToInt(g -> genresRates.getOrDefault(g.getId(), 0)).sum();
                     return anime.getScore()*genreWeight + sum;
                 }).reversed())
                 .toList();
