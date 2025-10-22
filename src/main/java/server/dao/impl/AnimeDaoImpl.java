@@ -73,7 +73,19 @@ public class AnimeDaoImpl implements AnimeDao {
 
     @Override
     public List<Anime> getByGenreId(Integer id, int limit) {
-        String sql = "SELECT anime.id as a_id, anime.title as a_title, anime.picture_path as a_picture_path, anime.synopsis as a_synopsis, anime.rank as a_rank, anime.score as a_score FROM anime JOIN anime_genre on anime.id = anime_genre.anime_id JOIN genre on anime_genre.genre_id = genre.id where genre_id = ? ORDER BY anime.score DESC LIMIT ?";
+        String sql = "SELECT " +
+                "anime.id as a_id, " +
+                "anime.title as a_title, " +
+                "anime.picture_path as a_picture_path, " +
+                "anime.synopsis as a_synopsis, " +
+                "anime.rank as a_rank, " +
+                "anime.score as a_score " +
+                "FROM anime " +
+                "JOIN anime_genre on anime.id = anime_genre.anime_id " +
+                "JOIN genre on anime_genre.genre_id = genre.id " +
+                "where genre_id = ? " +
+                "ORDER BY anime.score DESC " +
+                "LIMIT ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
              ){

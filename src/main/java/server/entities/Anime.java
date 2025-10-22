@@ -2,6 +2,7 @@ package server.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -22,4 +23,9 @@ public class Anime {
     private List<Genre> genres;
     private List<Anime> relatedAnime;
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass().equals(this.getClass())) return false;
+        return this.id.equals(((Anime) obj).getId());
+    }
 }
