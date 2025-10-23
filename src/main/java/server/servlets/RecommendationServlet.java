@@ -25,7 +25,6 @@ public class RecommendationServlet extends HttpServlet {
             resp.sendRedirect("index");
             return;
         }
-        System.out.println(animeList);
         req.getRequestDispatcher("recommendations.ftl").forward(req, resp);
 
     }
@@ -35,7 +34,6 @@ public class RecommendationServlet extends HttpServlet {
         String username = req.getParameter("shikiUsername");
         if (username == null) {
             resp.sendRedirect("index");
-            System.out.println("1");
             return;
         }
         Long shikiId = null;
@@ -43,12 +41,9 @@ public class RecommendationServlet extends HttpServlet {
             shikiId = shikimoriService.getShikiUserIdByUsername(username);
         } catch (Exception e) {
             resp.sendRedirect("index");
-            System.out.println("2");
-            e.printStackTrace();
             return;
         }
         var rates = shikimoriService.getAnimeRatesByShikiUserId(shikiId);
-        System.out.println(rates);
         List<Anime> animeList = recommendationService.getRecommendations(rates);
         req.setAttribute("animeList", animeList);
         this.doGet(req, resp);

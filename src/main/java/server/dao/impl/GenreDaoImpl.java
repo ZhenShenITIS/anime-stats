@@ -71,7 +71,7 @@ public class GenreDaoImpl implements GenreDao {
 
     @Override
     public List<Genre> getByAnimeId(Long animeId) {
-        String sql = "SELECT g.id, g.name " +
+        String sql = "SELECT DISTINCT g.id, g.name " +
                 "FROM genre g " +
                 "JOIN anime_genre ag ON ag.genre_id = g.id " +
                 "WHERE ag.anime_id = ?";

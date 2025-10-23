@@ -54,6 +54,7 @@ public class AppContextListener implements ServletContextListener {
         sce.getServletContext().setAttribute("databaseInitializer", databaseInitializer);
         sce.getServletContext().setAttribute("recommendationService", recommendationService);
         sce.getServletContext().setAttribute("shikimoriService", shikimoriService);
+        sce.getServletContext().setAttribute("animeSaverService", animeSaverService);
 
     }
 }

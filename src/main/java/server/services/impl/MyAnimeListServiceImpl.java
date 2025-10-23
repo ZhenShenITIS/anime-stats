@@ -43,7 +43,7 @@ public class MyAnimeListServiceImpl implements MyAnimeListService {
                 .id(response.getLong("id"))
                 .title(response.getString("title"))
                 .picturePath(pictureUrl)
-                .synopsis(response.getString("synopsis"))
+                .synopsis(response.getString("synopsis").replace("[Written by MAL Rewrite]", ""))
                 .score(score)
                 .rank(response.getInt("rank"))
                 .genres(genreList)
@@ -112,6 +112,10 @@ public class MyAnimeListServiceImpl implements MyAnimeListService {
     }
 
     private List<Genre> parseGenres (JSONObject response) {
+
+        if (!response.has("genres")) {
+            return List.of();
+        }
         JSONArray genres = response.getJSONArray("genres");
         List<Genre> genreList = new ArrayList<>();
         for (int i =0; i < genres.length(); i++){
