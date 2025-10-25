@@ -83,7 +83,7 @@ public class MyAnimeListServiceImpl implements MyAnimeListService {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            System.out.println("Sleep error");
         }
         HttpClient httpClient = HttpClient.newHttpClient();
         URI uri;
