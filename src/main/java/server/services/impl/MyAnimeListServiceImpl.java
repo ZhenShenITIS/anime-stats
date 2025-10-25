@@ -86,11 +86,11 @@ public class MyAnimeListServiceImpl implements MyAnimeListService {
             System.out.println("Sleep error");
         }
         HttpClient httpClient = HttpClient.newHttpClient();
-        URI uri;
+        URI uri = null;
         try {
             uri = new URI(url);
         } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+            System.out.println("URI Error");
         }
         String MALToken = System.getenv("MAL_API_TOKEN");
         HttpRequest httpRequest = HttpRequest
