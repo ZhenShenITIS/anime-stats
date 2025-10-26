@@ -2,7 +2,9 @@ package server.servlets;
 
 import server.dto.UserDto;
 import server.dto.UserLoginDto;
+import server.entities.User;
 import server.services.LoginService;
+import server.services.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,10 +17,11 @@ import java.io.IOException;
 
 @WebServlet(name = "Login", urlPatterns = "/login")
 public class LoginServlet  extends HttpServlet {
-    LoginService loginService;
+    private LoginService loginService;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect("login.ftl");
+        req.getRequestDispatcher("login.ftl").forward(req, resp);
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,20 +29,14 @@ public class LoginServlet  extends HttpServlet {
         String password = req.getParameter("password");
         UserDto user = loginService.login(new UserLoginDto(email, password));
         if (user != null) {
-            // session
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("email", email);
+            httpSession.setAttribute("id", user.getId());
             httpSession.setMaxInactiveInterval(365*24*60*60);
-
-            // cookie
-//            Cookie cookie = new Cookie("email", email);
-//            cookie.setMaxAge(24 * 60 * 60);
-//            resp.addCookie(cookie);
-
             req.setAttribute("user", user);
             req.getRequestDispatcher("index").forward(req, resp);
         } else {
-            resp.sendRedirect("login.ftl");
+            req.getRequestDispatcher("login.ftl").forward(req, resp);
         }
     }
 

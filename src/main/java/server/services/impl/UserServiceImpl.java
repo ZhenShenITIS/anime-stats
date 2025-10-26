@@ -20,6 +20,7 @@ public class UserServiceImpl implements UserService {
     public List<UserDto> getAll() {
         return userDao.getAll().stream().map(u-> UserDto
                 .builder()
+                        .id(u.getId())
                         .email(u.getEmail())
                         .name(u.getName())
                 .build())
@@ -32,6 +33,7 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             return UserDto
                     .builder()
+                    .id(user.getId())
                     .email(user.getEmail())
                     .name(user.getName())
                     .build();
@@ -39,5 +41,33 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    @Override
+    public boolean isUserAdmin(String email) {
+        User user = userDao.getByEmail(email);
+        if (user == null) {
+            return false;
+        }
+        return userDao.isUserAdmin(user.getId());
+    }
 
+
+    @Override
+    public boolean isUserAdmin(Long id) {
+        return userDao.isUserAdmin(id);
+    }
+
+    @Override
+    public void update(UserDto userDto) {
+        userDao.updateWithoutPassword(User
+                .builder()
+                        .name(userDto.getName())
+                        .email(userDto.getEmail())
+                        .id(userDto.getId())
+                .build());
+    }
+
+    @Override
+    public void delete(Long id) {
+        userDao.delete(id);
+    }
 }

@@ -15,4 +15,12 @@ public interface UserDao {
 
     User getByEmail(String email);
 
+    boolean isUserAdmin (Long id);
+
+    void addAdmin (Long id);
+
+    void updateWithoutPassword (User user);
+
+    void delete(Long id);
+
 }

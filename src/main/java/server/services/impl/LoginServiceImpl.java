@@ -19,6 +19,7 @@ public class LoginServiceImpl implements LoginService {
         if (user != null && user.getPassword().equals(passwordHash)) {
             return UserDto
                     .builder()
+                    .id(user.getId())
                     .name(user.getName())
                     .email(user.getEmail())
                     .build();
