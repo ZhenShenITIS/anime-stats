@@ -61,12 +61,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getById(Integer id) {
+    public User getById(Long id) {
         String sql = "SELECT * FROM users where id = ?";
         User user;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, id);
+            preparedStatement.setLong(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     user = User

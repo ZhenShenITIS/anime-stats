@@ -21,7 +21,7 @@ public class LoginServlet  extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("login.ftl").forward(req, resp);
+        req.getRequestDispatcher("/login.ftl").forward(req, resp);
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,11 +32,12 @@ public class LoginServlet  extends HttpServlet {
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("email", email);
             httpSession.setAttribute("id", user.getId());
+            httpSession.setAttribute("user", user);
             httpSession.setMaxInactiveInterval(365*24*60*60);
             req.setAttribute("user", user);
-            req.getRequestDispatcher("index").forward(req, resp);
+            req.getRequestDispatcher("/index").forward(req, resp);
         } else {
-            req.getRequestDispatcher("login.ftl").forward(req, resp);
+            req.getRequestDispatcher("/login.ftl").forward(req, resp);
         }
     }
 

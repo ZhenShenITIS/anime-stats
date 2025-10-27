@@ -11,7 +11,7 @@ public interface UserDao {
 
     void save(User user);
 
-    User getById(Integer id);
+    User getById(Long id);
 
     User getByEmail(String email);
 

@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/admin/*", "/admin"})
-public class AuthorizationFilter implements Filter {
+@WebFilter(urlPatterns = {"/index", "/profile", "/recommendations"})
+public class AuthenticationFilter implements Filter {
     private UserService userService;
 
     @Override
@@ -23,18 +23,11 @@ public class AuthorizationFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
-        if (session != null) {
-            if (session.getAttribute("id") != null) {
-                if (userService.isUserAdmin((Long) session.getAttribute("id"))) {
-                    chain.doFilter(request, response);
-                    return;
-                }
-            }
-            resp.sendRedirect("/index");
+        if (session == null || session.getAttribute("user") == null) {
+            resp.sendRedirect("/login");
+            return;
         }
-        resp.sendRedirect("/login");
-
-
+        chain.doFilter(request, response);
     }
 
     @Override

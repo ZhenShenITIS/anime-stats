@@ -11,6 +11,8 @@ public interface UserService {
 
     UserDto getByEmail(String login);
 
+    UserDto getById (Long id);
+
     boolean isUserAdmin (String email);
 
     boolean isUserAdmin (Long id);

@@ -53,7 +53,7 @@
                                         <span class="text-muted">Genres:</span>
                                         <div class="mt-2 d-flex flex-wrap gap-2">
                                             <#list anime.genres as g>
-                                                <span class="badge text-bg-primary">${(g.name)!'Unknown'}</span>
+                                                <span class="badge text-bg-success">${(g.name)!'Unknown'}</span>
                                             </#list>
                                         </div>
                                     </div>
