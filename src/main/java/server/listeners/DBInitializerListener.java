@@ -26,7 +26,7 @@ public class DBInitializerListener implements ServletContextListener {
                 e.printStackTrace();
             }
         };
-        scheduler.scheduleAtFixedRate(integrityCheckTask, 0, 24, TimeUnit.HOURS);
+        scheduler.scheduleAtFixedRate(integrityCheckTask, 0, 168, TimeUnit.HOURS);
 
     }
 

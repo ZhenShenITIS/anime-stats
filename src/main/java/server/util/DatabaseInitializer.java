@@ -23,11 +23,23 @@ public class DatabaseInitializer {
         int offset = IntegerConstants.OFFSET_FOR_ANIME_SAVE.getValue();
 
         while (numOfAnimeToSave > 0) {
-            Map<Long, Integer> animeTop = myAnimeListService.getAnimeTop(limit, offset);
+            Map<Long, Integer> animeTop = null;
+            try {
+                animeTop = myAnimeListService.getAnimeTop(limit, offset);
+            } catch (Exception e) {
+                continue;
+            }
             for (Long id : animeTop.keySet()) {
-                Anime anime = myAnimeListService.getAnimeById(id);
+                Anime anime = null;
+                try {
+                    anime = myAnimeListService.getAnimeById(id);
+                } catch (Exception ignored) {
+                }
                 if (anime == null) continue;
-                animeSaverService.saveOrUpdate(anime);
+                try {
+                    animeSaverService.saveOrUpdate(anime);
+                } catch (Exception ignored) {
+                }
             }
             offset = offset + limit;
             numOfAnimeToSave = numOfAnimeToSave - limit;
