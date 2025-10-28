@@ -18,7 +18,7 @@ public class AnimeServlet extends HttpServlet {
         Long id = Long.parseLong(req.getParameter("id"));
         Anime anime = animeSaverService.getWithGenresByID(id);
         req.setAttribute("anime", anime);
-        req.getRequestDispatcher("anime.ftl").forward(req, resp);
+        req.getRequestDispatcher("/anime.ftl").forward(req, resp);
 
     }
 

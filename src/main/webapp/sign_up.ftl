@@ -68,7 +68,6 @@
     </div>
 
     <script>
-        // AJAX валидация email
         $(document).on("change", "#ajax-email", function (){
             let email = $(this).val();
             let emailField = $(this);
@@ -92,7 +91,6 @@
             });
         });
 
-        // Bootstrap валидация формы
         (function () {
             'use strict';
             var forms = document.querySelectorAll('.needs-validation');

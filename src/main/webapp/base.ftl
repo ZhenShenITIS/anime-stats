@@ -22,7 +22,6 @@
 
         <div class="collapse navbar-collapse" id="mainNav">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <!-- Добавьте пункты меню при необходимости -->
             </ul>
 
             <div class="d-flex">

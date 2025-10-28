@@ -53,7 +53,6 @@
         </div>
 
         <script>
-                // Bootstrap 5 клиентская валидация
                 (function () {
                         'use strict';
                         var forms = document.querySelectorAll('.needs-validation');

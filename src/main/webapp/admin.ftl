@@ -59,7 +59,7 @@
         </ul>
     </div>
 
-    <!-- Update Modal -->
+
     <div class="modal fade" id="updateModal" tabindex="-1"
          aria-labelledby="updateModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -90,7 +90,6 @@
     </div>
 
     <script>
-        // Заполняем поля модалки данными пользователя из data-* атрибутов
         document.addEventListener('show.bs.modal', function (event) {
             if (event.target.id !== 'updateModal') return;
             const btn = event.relatedTarget;

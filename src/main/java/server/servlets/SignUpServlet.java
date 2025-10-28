@@ -16,7 +16,7 @@ public class SignUpServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect("sign_up.ftl");
+        req.getRequestDispatcher("/sign_up.ftl").forward(req, resp);
     }
 
     @Override
@@ -26,9 +26,9 @@ public class SignUpServlet extends HttpServlet {
         String password = req.getParameter("password");
 
         if (signUpService.signUp(UserRegistrationDto.builder().email(email).name(name).password(password).build())) {
-            resp.sendRedirect("success_registration.ftl");
+            req.getRequestDispatcher("/success_registration.ftl").forward(req, resp);
         } else {
-            resp.sendRedirect("already_signed_up.ftl");
+            req.getRequestDispatcher("/already_signed_up.ftl").forward(req, resp);
         }
     }
 

@@ -22,10 +22,10 @@ public class RecommendationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Object animeList = req.getAttribute("animeList");
         if (animeList == null) {
-            resp.sendRedirect("/index");
+            req.getRequestDispatcher("/index").forward(req, resp);
             return;
         }
-        req.getRequestDispatcher("recommendations.ftl").forward(req, resp);
+        req.getRequestDispatcher("/recommendations.ftl").forward(req, resp);
 
     }
 
@@ -33,14 +33,14 @@ public class RecommendationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("shikiUsername");
         if (username == null) {
-            resp.sendRedirect("/index");
+            req.getRequestDispatcher("/index").forward(req, resp);
             return;
         }
         Long shikiId = null;
         try {
             shikiId = shikimoriService.getShikiUserIdByUsername(username);
         } catch (Exception e) {
-            resp.sendRedirect("/index");
+            req.getRequestDispatcher("/index").forward(req, resp);
             return;
         }
         var rates = shikimoriService.getAnimeRatesByShikiUserId(shikiId);

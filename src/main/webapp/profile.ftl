@@ -9,9 +9,6 @@
       crossorigin="anonymous">
 <link rel="stylesheet" href="style.css">
 
-<#-- Берём пользователя через авто-поиск (request -> session -> application) -->
-<#--<#assign u = (user)!{}>-->
-
 <#macro content>
     <div class="container py-4">
         <div class="row justify-content-center">
