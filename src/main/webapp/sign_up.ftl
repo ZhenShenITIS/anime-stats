@@ -4,10 +4,9 @@
 
 <#macro title>Sign Up</#macro>
 
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
       crossorigin="anonymous">
 <link rel="stylesheet" href="style.css">
 
@@ -20,7 +19,11 @@
                         Регистрация
                     </div>
                     <div class="card-body">
-                        <form method="post" action="/signup" class="needs-validation" novalidate autocomplete="off">
+                        <form method="post"
+                              action="/signup"
+                              class="needs-validation"
+                              novalidate
+                              autocomplete="off">
                             <div class="mb-3">
                                 <label for="signup-name" class="form-label">Имя</label>
                                 <input type="text"
@@ -28,8 +31,14 @@
                                        class="form-control"
                                        id="signup-name"
                                        placeholder="Введите имя"
-                                       required>
-                                <div class="invalid-feedback">Пожалуйста, укажите имя.</div>
+                                       required
+                                       minlength="2"
+                                       maxlength="50"
+                                       pattern="^[A-Za-zА-Яа-яЁё0-9\s'\-\.]{2,50}$"
+                                       title="2–50 символов: буквы, цифры, пробел, тире, точка, апостроф">
+                                <div class="invalid-feedback">
+                                    Имя должно быть от 2 до 50 символов и содержать только допустимые символы.
+                                </div>
                             </div>
 
                             <div class="mb-3">
@@ -40,9 +49,10 @@
                                        id="ajax-email"
                                        placeholder="name@example.com"
                                        required
-                                       autocomplete="off">
+                                       maxlength="256"
+                                       autocomplete="email">
                                 <div id="ajax-email-response" class="form-text"></div>
-                                <div class="invalid-feedback">Укажите корректный e-mail.</div>
+                                <div class="invalid-feedback">Укажите корректный e‑mail.</div>
                             </div>
 
                             <div class="mb-3">
@@ -52,12 +62,20 @@
                                        class="form-control"
                                        id="signup-password"
                                        placeholder="Введите пароль"
-                                       required>
-                                <div class="invalid-feedback">Пароль не может быть пустым.</div>
+                                       required
+                                       minlength="8"
+                                       maxlength="64"
+                                       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])\S{8,64}$"
+                                       title="Минимум 8 символов, хотя бы одна строчная и прописная буква, цифра и спецсимвол, без пробелов">
+                                <div class="invalid-feedback">
+                                    Минимум 8 символов, хотя бы одна строчная и прописная буква, цифра и спецсимвол, без пробелов.
+                                </div>
                             </div>
 
                             <div class="d-grid gap-2">
-                                <button type="submit" id="ajax-button" class="btn btn-success" disabled>Зарегистрироваться</button>
+                                <button type="submit" id="ajax-button" class="btn btn-success" disabled>
+                                    Зарегистрироваться
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -68,29 +86,6 @@
     </div>
 
     <script>
-        $(document).on("change", "#ajax-email", function (){
-            let email = $(this).val();
-            let emailField = $(this);
-
-            $.get("/ajax/validate/email/registration", {email: email}, function (response){
-                if (response === "true") {
-                    $("#ajax-email-response")
-                        .text("Email свободен")
-                        .removeClass("text-danger")
-                        .addClass("text-success");
-                    emailField.removeClass("is-invalid").addClass("is-valid");
-                    $("#ajax-button").prop("disabled", false);
-                } else {
-                    $("#ajax-email-response")
-                        .text("Email уже занят")
-                        .removeClass("text-success")
-                        .addClass("text-danger");
-                    emailField.removeClass("is-valid").addClass("is-invalid");
-                    $("#ajax-button").prop("disabled", true);
-                }
-            });
-        });
-
         (function () {
             'use strict';
             var forms = document.querySelectorAll('.needs-validation');
@@ -104,6 +99,68 @@
                 }, false);
             });
         })();
+
+
+        $(function () {
+            const $form  = $('form.needs-validation');
+            const $name  = $('#signup-name');
+            const $email = $('#ajax-email');
+            const $pwd   = $('#signup-password');
+            const $btn   = $('#ajax-button');
+            const $msg   = $('#ajax-email-response');
+
+            function updateSaveState() {
+                const nativeValid = $form[0].checkValidity();
+                const emailOk = !$email.hasClass('is-invalid');
+                $btn.prop('disabled', !(nativeValid && emailOk));
+            }
+
+            function toggleValidity($el) {
+                if ($el[0].checkValidity()) {
+                    $el.removeClass('is-invalid').addClass('is-valid');
+                } else {
+                    $el.removeClass('is-valid').addClass('is-invalid');
+                }
+            }
+
+            $name.on('input', function () {
+                toggleValidity($name);
+                updateSaveState();
+            });
+
+            $pwd.on('input', function () {
+                toggleValidity($pwd);
+                updateSaveState();
+            });
+
+
+            $email.on('change', function () {
+                if (!$email[0].checkValidity()) {
+                    $msg.text('');
+                    $email.removeClass('is-valid').addClass('is-invalid');
+                    updateSaveState();
+                    return;
+                }
+                const emailVal = $email.val().trim();
+                $.get('/ajax/validate/email/registration', { email: emailVal }, function (response) {
+                    if (response === 'true') {
+                        $msg.text('Email свободен')
+                            .removeClass('text-danger')
+                            .addClass('text-success');
+                        $email.removeClass('is-invalid').addClass('is-valid');
+                    } else {
+                        $msg.text('Email уже занят')
+                            .removeClass('text-success')
+                            .addClass('text-danger');
+                        $email.removeClass('is-valid').addClass('is-invalid');
+                    }
+                    updateSaveState();
+                });
+            });
+
+
+            updateSaveState();
+        });
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
