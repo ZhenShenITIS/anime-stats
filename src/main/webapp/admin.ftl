@@ -23,11 +23,11 @@
                 <#list users as user>
                     <li class="list-group-item d-flex align-items-center">
                         <div class="user-info flex-grow-1 min-w-0 me-3">
-                            <div class="user-name text-truncate break-anywhere" title="${user.name?html}">
-                                ${user.name?html}
+                            <div class="user-name text-truncate break-anywhere" title="${user.name}">
+                                ${user.name}
                             </div>
-                            <div class="user-email text-truncate break-anywhere" title="${user.email?html}">
-                                ${user.email?html}
+                            <div class="user-email text-truncate break-anywhere" title="${user.email}">
+                                ${user.email}
                             </div>
                         </div>
 
@@ -47,8 +47,8 @@
                                     <a href="#" class="dropdown-item update-btn"
                                        data-bs-toggle="modal" data-bs-target="#updateModal"
                                        data-id="${user.id?c}"
-                                       data-name="${user.name?html}"
-                                       data-email="${user.email?html}">
+                                       data-name="${user.name}"
+                                       data-email="${user.email}">
                                         Update
                                     </a>
                                 </li>
