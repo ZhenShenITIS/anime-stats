@@ -1,3 +1,16 @@
+create table if not exists users
+(
+    id       serial
+        primary key,
+    name     varchar,
+    email    varchar
+        unique,
+    password varchar
+);
+
+alter table users
+    owner to zhenshen;
+
 create table if not exists admin
 (
     admin integer
@@ -25,18 +38,7 @@ create table if not exists anime
 alter table anime
     owner to zhenshen;
 
-create table if not exists anime_genre
-(
-    anime_id bigint
-        constraint anime_genre_anime_id_fk
-            references anime,
-    genre_id integer
-        constraint anime_genre_genre_id_fk
-            references genre
-);
 
-alter table anime_genre
-    owner to zhenshen;
 
 create table if not exists genre
 (
@@ -51,15 +53,16 @@ create table if not exists genre
 alter table genre
     owner to zhenshen;
 
-create table if not exists users
+
+create table if not exists anime_genre
 (
-    id       serial
-        primary key,
-    name     varchar,
-    email    varchar
-        unique,
-    password varchar
+    anime_id bigint
+        constraint anime_genre_anime_id_fk
+            references anime,
+    genre_id integer
+        constraint anime_genre_genre_id_fk
+            references genre
 );
 
-alter table users
+alter table anime_genre
     owner to zhenshen;
