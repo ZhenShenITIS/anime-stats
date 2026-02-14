@@ -9,7 +9,7 @@ create table if not exists users
 );
 
 alter table users
-    owner to zhenshen;
+    owner to postgres;
 
 create table if not exists admin
 (
@@ -21,7 +21,7 @@ create table if not exists admin
 );
 
 alter table admin
-    owner to zhenshen;
+    owner to postgres;
 
 create table if not exists anime
 (
@@ -36,7 +36,7 @@ create table if not exists anime
 );
 
 alter table anime
-    owner to zhenshen;
+    owner to postgres;
 
 
 
@@ -51,7 +51,7 @@ create table if not exists genre
 );
 
 alter table genre
-    owner to zhenshen;
+    owner to postgres;
 
 
 create table if not exists anime_genre
@@ -65,4 +65,4 @@ create table if not exists anime_genre
 );
 
 alter table anime_genre
-    owner to zhenshen;
+    owner to postgres;
