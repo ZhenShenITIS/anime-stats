@@ -39,12 +39,6 @@
     </servlet-mapping>
 
     <error-page>
-        <error-code>404</error-code>
-        <location>/handle</location>
-    </error-page>
-
-    <error-page>
-        <error-code>500</error-code>
         <location>/handle</location>
     </error-page>
 
@@ -54,7 +48,7 @@
     </error-page>
 
     <welcome-file-list>
-        <welcome-file>login.ftl</welcome-file>
+        <welcome-file>/index</welcome-file>
     </welcome-file-list>
 
 </web-app>

@@ -17,24 +17,24 @@ public class DBInitializerListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        databaseInitializer = (DatabaseInitializer) sce.getServletContext().getAttribute("databaseInitializer");
-        scheduler = Executors.newSingleThreadScheduledExecutor();
-        Runnable integrityCheckTask = () -> {
-            try {
-                databaseInitializer.init();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        };
-        scheduler.scheduleAtFixedRate(integrityCheckTask, 0, 168, TimeUnit.HOURS);
+//        databaseInitializer = (DatabaseInitializer) sce.getServletContext().getAttribute("databaseInitializer");
+//        scheduler = Executors.newSingleThreadScheduledExecutor();
+//        Runnable integrityCheckTask = () -> {
+//            try {
+//                databaseInitializer.init();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        };
+//        scheduler.scheduleAtFixedRate(integrityCheckTask, 0, 168, TimeUnit.HOURS);
 
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        if (scheduler != null) {
-            scheduler.shutdownNow();
-        }
+//        if (scheduler != null) {
+//            scheduler.shutdownNow();
+//        }
     }
 
 

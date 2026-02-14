@@ -12,9 +12,9 @@ public class DatabaseConnectionUtil {
         if (connection == null) {
             try {
                 Class.forName("org.postgresql.Driver");
-                String url = System.getenv("DB_URL");
-                String user = System.getenv("DB_USER");
-                String password = System.getenv("DB_PASSWORD");
+                String url = System.getenv("jdbc:postgresql://postgres:5432/anime_db");
+                String user = System.getenv("POSTGRES_USER");
+                String password = System.getenv("POSTGRES_PASSWORD");
                 connection = DriverManager.getConnection(url, user, password);
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
