@@ -17,8 +17,8 @@ services:
     command: -connectRetries=60 migrate
     environment:
       FLYWAY_URL: jdbc:postgresql://postgres:5432/anime_db
-      FLYWAY_USER: anime_user
-      FLYWAY_PASSWORD: anime_password
+      FLYWAY_USER: ${POSTGRES_USER}
+      FLYWAY_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - ./sql:/flyway/sql
     depends_on:
