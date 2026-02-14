@@ -17,9 +17,9 @@ public class DataSourceListener implements ServletContextListener {
             throw new RuntimeException(e);
         }
         HikariConfig hikariConfig = new HikariConfig();
-        String url = System.getenv("DB_URL");
-        String user = System.getenv("DB_USER");
-        String password = System.getenv("DB_PASSWORD");
+        String url = System.getenv("POSTGRES_URL");
+        String user = System.getenv("POSTGRES_USER");
+        String password = System.getenv("POSTGRES_PASSWORD");
         hikariConfig.setJdbcUrl(url);
         hikariConfig.setUsername(user);
         hikariConfig.setPassword(password);
